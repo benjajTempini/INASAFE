@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="ina_red">#CE2B22</color>
+    <color name="ina_red_dark">#B71C12</color>
+    <color name="ina_red_light">#FF6B6B</color>
+    <color name="ina_pink">#FFCDD2</color>
+    <color name="map_gray">#E0E0E0</color>
+    <color name="map_blue">#BBDEFB</color>
+    <color name="map_road">#FFFFFF</color>
+    <color name="ina_blue">#0F71B7</color>
+</resources>

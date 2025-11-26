@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "952392951472",
+    "project_id": "ina-safe",
+    "storage_bucket": "ina-safe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952392951472:android:4a823d80411e7f394d3d75",
+        "android_client_info": {
+          "package_name": "com.example.inasafe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdoL9tydOjflEjZ-1ZNvBmtEk-5ECT0go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,59 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="600dp"
+    android:viewportWidth="400"
+    android:viewportHeight="600">
+
+    <!-- 1. Fondo General (Suelo Urbano Google Maps) -->
+    <path android:fillColor="#F2F4F5" android:pathData="M0,0h400v600h-400z"/>
+
+    <!-- 2. Manzanas Industriales (Bloques Grises) -->
+    <!-- Bloques Izquierda (Oeste de Bravo de Saravia) -->
+    <path android:fillColor="#EBEBEB" android:pathData="M-20,150 L120,170 L140,300 L0,280 Z"/>
+    <path android:fillColor="#EBEBEB" android:pathData="M-20,300 L150,320 L180,550 L10,550 Z"/>
+    <path android:fillColor="#E0E0E0" android:pathData="M40,350 L120,360 L130,450 L50,440 Z"/> <!-- Nave industrial -->
+
+    <!-- Bloques Centro (Entre Bravo y Autopista) -->
+    <path android:fillColor="#F5F5F5" android:pathData="M180,180 L280,195 L330,550 L220,530 Z"/>
+    
+    <!-- Bloques Derecha (Este de Autopista) -->
+    <path android:fillColor="#F5F5F5" android:pathData="M360,100 L420,110 L420,500 L390,500 Z"/>
+
+    <!-- 3. Zonas Institucionales (Beige - INACAP y Shell) -->
+    <!-- Edificio INACAP (Forma de T/L característica) - MOVIDO A LA IZQUIERDA DE BRAVO DE SARAVIA -->
+    <!-- Moveremos las coordenadas X aproximadamente -120px y ajustaremos Y -->
+    <path android:fillColor="#FFF9C4" android:strokeColor="#E6E6E6" android:strokeWidth="1"
+          android:pathData="M80,360 L140,370 L150,430 L120,425 L115,500 L85,495 L90,420 L80,420 Z"/>
+    
+    <!-- Shell / Rhona (Abajo Derecha) -->
+    <path android:fillColor="#FFF9C4" android:pathData="M350,520 L390,525 L380,580 L340,575 Z"/>
+
+    <!-- 4. Autopista Central (Diagonal Azulada) -->
+    <!-- Cuerpo Principal -->
+    <path android:fillColor="#9FA8DA" android:pathData="M300,-10 L350,-10 L400,500 L350,500 Z"/> <!-- Fondo oscuro -->
+    <path android:fillColor="#90A4AE" android:pathData="M305,-10 L345,-10 L395,500 L355,500 Z"/> <!-- Asfalto -->
+    <!-- Líneas carriles -->
+    <path android:strokeColor="#CFD8DC" android:strokeWidth="2" android:pathData="M325,-10 L375,500"/>
+
+    <!-- 5. Calles Principales (Blancas con borde) -->
+    
+    <!-- Av. Dorsal (Arriba - Curva) -->
+    <path android:strokeColor="#E0E0E0" android:strokeWidth="30" android:pathData="M-10,60 Q150,70 250,120 L420,150"/>
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="24" android:pathData="M-10,60 Q150,70 250,120 L420,150"/>
+
+    <!-- Caletera Eduardo Frei Montalva (Paralela a Autopista) -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="18" android:pathData="M280,-10 L330,500"/>
+    
+    <!-- Bravo de Saravia (Diagonal izquierda - INACAP) -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="15" android:pathData="M180,120 L230,610"/>
+
+    <!-- Calles transversales -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="8" android:pathData="M130,280 L285,305"/> <!-- JJ Detergentes -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="8" android:pathData="M230,600 L350,620"/> <!-- Abajo -->
+
+    <!-- 6. Detalles (Puntos de interés visuales) -->
+    <!-- Icono Shell (Círculo simple) -->
+    <path android:fillColor="#FFFFFF" android:pathData="M365,550 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0"/>
+    <path android:fillColor="#F44336" android:pathData="M370,550 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0"/>
+
+</vector>

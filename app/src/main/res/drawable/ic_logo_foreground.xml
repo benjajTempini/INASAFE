@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Escudo Rojo -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#E62117"
+        android:strokeWidth="4"
+        android:pathData="M54,18 L28,28 V48 C28,66 39,82 54,90 C69,82 80,66 80,48 V28 L54,18 Z"/>
+        
+    <!-- Candado Azul -->
+    <!-- Cuerpo del candado -->
+    <path
+        android:fillColor="#0F71B7"
+        android:pathData="M42,48 H66 V70 H42 Z"/>
+    <!-- Arco del candado -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#0F71B7"
+        android:strokeWidth="4"
+        android:pathData="M46,48 V40 A8,8 0 0 1 62,40 V48"/>
+        
+    <!-- Ojo de la cerradura (Blanco) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54 A2,2 0 1 1 54,58 L53,62 H55 L54,58 Z"/>
+        
+</vector>

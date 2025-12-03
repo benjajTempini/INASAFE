@@ -1,171 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Cabecera del servicio: Número y Destino -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivBusIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_bus_side"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/ina_red" />
+
+        <TextView
+            android:id="@+id/tvServiceName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginStart="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivBusIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="402" />
 
-            <TextView
-                android:id="@+id/tvServiceName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="507"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/tvDestination"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:text="Peñalolen - (M) Parque O'higgins"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp"
-            android:background="#E0E0E0"/>
-
-        <!-- Primer Bus (Próximo) -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvDestination"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvServiceName"
+            app:layout_constraintStart_toEndOf="@id/tvServiceName"
+            app:layout_constraintTop_toTopOf="@id/tvServiceName"
+            tools:text="Hacia Pudahuel - Centro" />
+
+        <ImageButton
+            android:id="@+id/btnFavorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Marcar como favorito"
+            android:src="@drawable/ic_star_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- First Bus Arrival -->
+        <LinearLayout
+            android:id="@+id/llArrival1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_bus_arrival_card"
             android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:orientation="horizontal"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivBusIcon">
 
-            <!-- Icono Bus -->
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_bus_side"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_bus_icon"
-                android:padding="4dp"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_bus_marker"
+                app:tint="@color/ina_red" />
 
-            <!-- Tiempo y Distancia (Simulado) -->
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvArrival1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:textColor="@color/ina_red"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Llegando" />
 
-                <TextView
-                    android:id="@+id/tvArrival1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Llegando"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
-
-                 <!-- Opcional: Distancia si estuviera disponible -->
-                 <!--
-                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200m"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/darker_gray"/>
-                 -->
-            </LinearLayout>
-
-            <!-- Patente -->
             <TextView
                 android:id="@+id/tvPlate1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FLXC46"
                 android:background="@drawable/bg_plate_number"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:textSize="12sp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginEnd="8dp"/>
-                
-             <!-- Icono bus pequeño (tipo 'live' o mapa) -->
-             <ImageView
-                 android:layout_width="24dp"
-                 android:layout_height="24dp"
-                 android:src="@drawable/ic_bus_marker"
-                 app:tint="@color/ina_red"/>
+                tools:text="PF-TW-50" />
         </LinearLayout>
-        
-        <!-- Segundo Bus (Siguiente) - Opcional / Separador -->
+
+        <!-- Second Bus Arrival -->
         <LinearLayout
-             android:id="@+id/layoutSecondBus"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="horizontal"
-             android:gravity="center_vertical">
-             
-             <!-- Icono Bus (fantasma/transparente o igual) -->
-             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_bus_side"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_bus_icon"
-                android:padding="4dp"
-                android:alpha="0.5"/>
-                
-             <LinearLayout
+            android:id="@+id/llArrival2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_bus_arrival_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llArrival1"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_bus_marker"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvArrival2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
-                
-                <TextView
-                    android:id="@+id/tvArrival2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="07 a 11 min"
-                    android:textSize="16sp"
-                    android:textStyle="normal"
-                    android:textColor="@android:color/black"/>
-             </LinearLayout>
-             
-             <!-- Patente 2 -->
-             <TextView
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="8 a 12 min" />
+
+            <TextView
                 android:id="@+id/tvPlate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="----"
                 android:background="@drawable/bg_plate_number"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:textSize="12sp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginEnd="8dp"/>
-
-             <ImageView
-                 android:layout_width="24dp"
-                 android:layout_height="24dp"
-                 android:src="@drawable/ic_bus_marker"
-                 app:tint="@color/ina_red"/>
+                tools:text="TB-FW-20" />
         </LinearLayout>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tvDepartureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/ina_blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llArrival2"
+            tools:text="Sal en 5 min para llegar a tiempo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -12,7 +12,8 @@ class BusStopsAdapter(private var stops: List<NearbyBusStop>) : RecyclerView.Ada
 
     class StopViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvStopName: TextView = view.findViewById(R.id.tvStopName)
-        val tvStopId: TextView = view.findViewById(R.id.tvLocation) // Reusing tvLocation for stop ID
+        val tvDistance: TextView = view.findViewById(R.id.tvDistance)
+        val tvLocation: TextView = view.findViewById(R.id.tvLocation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopViewHolder {
@@ -24,11 +25,15 @@ class BusStopsAdapter(private var stops: List<NearbyBusStop>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: StopViewHolder, position: Int) {
         val stop = stops[position]
         holder.tvStopName.text = stop.name
-        holder.tvStopId.text = stop.id
+        holder.tvDistance.text = "${stop.distance.toInt()}m"
+        holder.tvLocation.text = stop.id // Still using tvLocation for the ID
+
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, BusArrivalsActivity::class.java).apply {
                 putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
+                putExtra(BusArrivalsActivity.EXTRA_STOP_LAT, stop.lat)
+                putExtra(BusArrivalsActivity.EXTRA_STOP_LON, stop.lon)
             }
             context.startActivity(intent)
         }

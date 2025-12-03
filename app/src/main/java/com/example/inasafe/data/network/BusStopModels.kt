@@ -11,7 +11,9 @@ data class NearbyBusStop(
     @SerializedName("stop_lat")
     val lat: Double,
     @SerializedName("stop_lon")
-    val lon: Double
+    val lon: Double,
+    @SerializedName("distance")
+    val distance: Double
 )
 
 // Models for Stop Arrivals endpoint
@@ -38,13 +40,17 @@ data class BusService(
     @SerializedName("servicio")
     val serviceName: String,
     @SerializedName("horaprediccionbus1")
-    val arrival1: String,
+    val arrival1: String?,
     @SerializedName("horaprediccionbus2")
-    val arrival2: String,
-    @SerializedName("destino")
-    val destination: String,
+    val arrival2: String?,
+    @SerializedName("distanciabus1")
+    val distance1: String?,
+    @SerializedName("distanciabus2")
+    val distance2: String?,
     @SerializedName("ppubus1")
     val plate1: String?,
     @SerializedName("ppubus2")
-    val plate2: String?
+    val plate2: String?,
+    @SerializedName("destino")
+    val destination: String
 )

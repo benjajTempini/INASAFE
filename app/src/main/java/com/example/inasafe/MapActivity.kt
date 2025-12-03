@@ -103,18 +103,22 @@ class MapActivity : AppCompatActivity() {
             stopMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             stopMarker.title = stop.name
             stopMarker.subDescription = stop.id
-            // Using the newly created bus stop icon
             stopMarker.icon = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop)
             
-            stopMarker.setOnMarkerClickListener { marker, _ ->
-                // Show info window
-                marker.showInfoWindow()
-                
-                // Open BusArrivalsActivity
-                val intent = Intent(this, BusArrivalsActivity::class.java).apply {
-                    putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
+            stopMarker.setOnMarkerClickListener { _, _ ->
+                val myLocation = locationOverlay.myLocation
+                if (myLocation != null) {
+                    val intent = Intent(this, BusArrivalsActivity::class.java).apply {
+                        putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
+                        putExtra(BusArrivalsActivity.EXTRA_STOP_LAT, stop.lat)
+                        putExtra(BusArrivalsActivity.EXTRA_STOP_LON, stop.lon)
+                        putExtra(BusArrivalsActivity.EXTRA_USER_LAT, myLocation.latitude)
+                        putExtra(BusArrivalsActivity.EXTRA_USER_LON, myLocation.longitude)
+                    }
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "No se pudo obtener tu ubicación actual.", Toast.LENGTH_SHORT).show()
                 }
-                startActivity(intent)
                 true
             }
             map.overlays.add(stopMarker)
@@ -125,7 +129,6 @@ class MapActivity : AppCompatActivity() {
     private fun listenForAlerts() {
         alertsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                // Clear old alert markers
                 alertMarkers.forEach { map.overlays.remove(it) }
                 alertMarkers.clear()
 
@@ -144,7 +147,7 @@ class MapActivity : AppCompatActivity() {
                         map.overlays.add(alertMarker)
                     }
                 }
-                map.invalidate() // Refresh the map
+                map.invalidate()
 
                 if (activeAlerts.size > 3) {
                     showDangerDialog()
@@ -165,7 +168,6 @@ class MapActivity : AppCompatActivity() {
             .setIcon(R.drawable.ic_warning)
             .show()
     }
-
 
     override fun onResume() {
         super.onResume()

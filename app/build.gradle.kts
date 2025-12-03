@@ -8,6 +8,18 @@ android {
     namespace = "com.example.inasafe"
     compileSdk = 34
 
+    signingConfigs {
+        create("release") {
+            val storeFileProp = project.findProperty("INA_SAFE_RELEASE_STORE_FILE")?.toString()
+            if (storeFileProp != null && storeFileProp.isNotEmpty()) {
+                storeFile = file(storeFileProp)
+                storePassword = project.findProperty("INA_SAFE_RELEASE_STORE_PASSWORD")?.toString()
+                keyAlias = project.findProperty("INA_SAFE_RELEASE_KEY_ALIAS")?.toString()
+                keyPassword = project.findProperty("INA_SAFE_RELEASE_KEY_PASSWORD")?.toString()
+            }
+        }
+    }
+
     defaultConfig {
         applicationId = "com.example.inasafe"
         minSdk = 26
@@ -25,6 +37,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

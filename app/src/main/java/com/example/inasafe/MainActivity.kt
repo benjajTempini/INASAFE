@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         val btnNavMap = findViewById<LinearLayout>(R.id.btnNavMap)
         val btnNavList = findViewById<LinearLayout>(R.id.btnNavList)
         val btnNavBus = findViewById<LinearLayout>(R.id.btnNavBus)
+        // Reemplazamos btnNavProfile por btnNavGroups
+        val btnNavGroups = findViewById<LinearLayout>(R.id.btnNavGroups)
 
         btnPanic.setOnClickListener {
             sendPanicAlert()
@@ -60,6 +62,12 @@ class MainActivity : AppCompatActivity() {
 
         btnNavBus.setOnClickListener {
             startActivity(Intent(this, BusStopsActivity::class.java))
+        }
+        
+        btnNavGroups.setOnClickListener {
+            // Por ahora solo mostrará un Toast, luego se implementará GroupsActivity
+            Toast.makeText(this, "Próximamente: Grupos de estudiantes", Toast.LENGTH_SHORT).show()
+            // startActivity(Intent(this, GroupsActivity::class.java))
         }
     }
 

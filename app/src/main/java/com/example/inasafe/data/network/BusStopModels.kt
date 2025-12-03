@@ -42,5 +42,9 @@ data class BusService(
     @SerializedName("horaprediccionbus2")
     val arrival2: String,
     @SerializedName("destino")
-    val destination: String
+    val destination: String,
+    @SerializedName("ppubus1")
+    val plate1: String?,
+    @SerializedName("ppubus2")
+    val plate2: String?
 )

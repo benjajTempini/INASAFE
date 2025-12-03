@@ -43,11 +43,15 @@ class ProfileActivity : AppCompatActivity() {
         val btnNavMap = findViewById<LinearLayout>(R.id.btnNavMap)
         val btnNavList = findViewById<LinearLayout>(R.id.btnNavList)
         val btnNavBus = findViewById<LinearLayout>(R.id.btnNavBus)
-        val btnNavProfile = findViewById<LinearLayout>(R.id.btnNavProfile)
+        // El botón de perfil ya no existe en el layout, ahora es btnNavGroups
+        val btnNavGroups = findViewById<LinearLayout>(R.id.btnNavGroups)
 
         btnNavMap.setOnClickListener { startActivity(Intent(this, MapActivity::class.java)) }
         btnNavList.setOnClickListener { startActivity(Intent(this, AlertsActivity::class.java)) }
         btnNavBus.setOnClickListener { startActivity(Intent(this, BusStopsActivity::class.java)) }
-        // Already here
+        
+        btnNavGroups.setOnClickListener {
+             Toast.makeText(this, "Próximamente: Grupos de estudiantes", Toast.LENGTH_SHORT).show()
+        }
     }
 }

@@ -77,8 +77,10 @@ class MapActivity : AppCompatActivity() {
         locationOverlay.runOnFirstFix {
             runOnUiThread {
                 val myLocation = locationOverlay.myLocation
-                map.controller.animateTo(myLocation)
-                loadNearbyBusStops(myLocation)
+                if (myLocation != null) {
+                    map.controller.animateTo(myLocation)
+                    loadNearbyBusStops(myLocation)
+                }
             }
         }
     }
@@ -101,9 +103,14 @@ class MapActivity : AppCompatActivity() {
             stopMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             stopMarker.title = stop.name
             stopMarker.subDescription = stop.id
-            // You can customize the bus stop icon here
-            // stopMarker.icon = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop)
-            stopMarker.setOnMarkerClickListener { _, _ ->
+            // Using the newly created bus stop icon
+            stopMarker.icon = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop)
+            
+            stopMarker.setOnMarkerClickListener { marker, _ ->
+                // Show info window
+                marker.showInfoWindow()
+                
+                // Open BusArrivalsActivity
                 val intent = Intent(this, BusArrivalsActivity::class.java).apply {
                     putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
                 }

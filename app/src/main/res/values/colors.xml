@@ -10,4 +10,5 @@
     <color name="map_blue">#BBDEFB</color>
     <color name="map_road">#FFFFFF</color>
     <color name="ina_blue">#0F71B7</color>
+    <color name="ina_navy">#003366</color>
 </resources>

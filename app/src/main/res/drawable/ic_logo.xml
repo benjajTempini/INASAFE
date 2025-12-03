@@ -1,27 +1,21 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    
-    <!-- Escudo Rojo -->
-    <path
-        android:fillColor="#00000000"
-        android:strokeColor="#E62117"
-        android:strokeWidth="8"
-        android:pathData="M54,15 L20,25 V50 C20,70 35,90 54,100 C73,90 88,70 88,50 V25 L54,15 Z"/>
-        
-    <!-- Candado Azul -->
-    <!-- Cuerpo del candado -->
-    <path
-        android:fillColor="#0F71B7"
-        android:pathData="M38,50 H70 V80 H38 Z"/>
-    <!-- Arco del candado -->
-    <path
-        android:fillColor="#00000000"
-        android:strokeColor="#0F71B7"
-        android:strokeWidth="8"
-        android:pathData="M42,50 V40 A12,12 0 0 1 66,40 V50"/>
-        
-
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  
+  <!-- Parte Izquierda del Escudo (Rojo Claro) -->
+  <path
+      android:fillColor="@color/ina_red"
+      android:pathData="M12,1 L3,5 V11 C3,16.55 6.84,21.74 12,23 V1 Z"/>
+      
+  <!-- Parte Derecha del Escudo (Rojo Oscuro) -->
+  <path
+      android:fillColor="@color/ina_red_dark"
+      android:pathData="M12,1 L21,5 V11 C21,16.55 17.16 21.74 12,23 V1 Z"/>
+      
+  <!-- Candado (Blanco) -->
+  <path
+      android:fillColor="@color/white"
+      android:pathData="M12,6 C10.62,6 9.5,7.12 9.5,8.5 V11 H8.5 C7.67,11 7,11.67 7,12.5 V16.5 C7,17.33 7.67,18 8.5,18 H15.5 C16.33,18 17,17.33 17,16.5 V12.5 C17,11.67 16.33,11 15.5,11 H14.5 V8.5 C14.5,7.12 13.38,6 12,6 Z M12,7.5 C12.55,7.5 13,7.95 13,8.5 V11 H11 V8.5 C11,7.95 11.45,7.5 12,7.5 Z M12,13.5 C12.55,13.5 13,13.95 13,14.5 C13,15.05 12.55,15.5 12,15.5 C11.45,15.5 11,15.05 11,14.5 C11,13.95 11.45,13.5 12,13.5 Z"/>
 </vector>

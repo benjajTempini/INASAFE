@@ -1,18 +1,24 @@
 package com.example.inasafe
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlin.random.Random
 
 class ReportActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private val fusedLocationClient by lazy {
+        LocationServices.getFusedLocationProviderClient(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,26 @@ class ReportActivity : AppCompatActivity() {
             val details = etDetails.text.toString()
 
             if (description.isNotEmpty()) {
+                sendReport(description, details, userId)
+            } else {
+                Toast.makeText(this, "Por favor ingrese una descripción", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        btnViewAll.setOnClickListener {
+            startActivity(Intent(this, AlertsActivity::class.java))
+        }
+    }
+
+    private fun sendReport(description: String, details: String, userId: String) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Se necesita permiso de ubicación para enviar un reporte.", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
                 val database = FirebaseDatabase.getInstance().getReference("Alerts")
                 val alertId = database.push().key!!
 
@@ -40,8 +66,8 @@ class ReportActivity : AppCompatActivity() {
                     time = System.currentTimeMillis().toString(),
                     status = "Activa",
                     type = "Reporte",
-                    x = Random.nextFloat(),
-                    y = Random.nextFloat(),
+                    latitude = location.latitude,
+                    longitude = location.longitude,
                     userId = userId
                 )
 
@@ -51,14 +77,9 @@ class ReportActivity : AppCompatActivity() {
                 }.addOnFailureListener {
                     Toast.makeText(this, "Error al enviar el reporte.", Toast.LENGTH_SHORT).show()
                 }
-
             } else {
-                Toast.makeText(this, "Por favor ingrese una descripción", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "No se pudo obtener la ubicación. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        btnViewAll.setOnClickListener {
-            startActivity(Intent(this, AlertsActivity::class.java))
         }
     }
 }

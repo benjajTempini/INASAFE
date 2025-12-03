@@ -9,7 +9,7 @@ data class Alert(
     val time: String? = null,
     val status: String? = null,
     val type: String? = null,
-    val x: Float? = null,
-    val y: Float? = null,
+    val latitude: Double? = null,
+    val longitude: Double? = null,
     val userId: String? = null
 )

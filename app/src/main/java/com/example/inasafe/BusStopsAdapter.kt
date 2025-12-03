@@ -1,20 +1,18 @@
 package com.example.inasafe
 
-import android.graphics.Color
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.inasafe.data.network.NearbyBusStop
 
-class BusStopsAdapter(private val stops: List<BusStop>) : RecyclerView.Adapter<BusStopsAdapter.StopViewHolder>() {
+class BusStopsAdapter(private var stops: List<NearbyBusStop>) : RecyclerView.Adapter<BusStopsAdapter.StopViewHolder>() {
 
     class StopViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvStopName: TextView = view.findViewById(R.id.tvStopName)
-        val tvDistance: TextView = view.findViewById(R.id.tvDistance)
-        val tvLocation: TextView = view.findViewById(R.id.tvLocation)
-        val arrivalsContainer: LinearLayout = view.findViewById(R.id.arrivalsContainer)
+        val tvStopId: TextView = view.findViewById(R.id.tvLocation) // Reusing tvLocation for stop ID
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopViewHolder {
@@ -26,31 +24,20 @@ class BusStopsAdapter(private val stops: List<BusStop>) : RecyclerView.Adapter<B
     override fun onBindViewHolder(holder: StopViewHolder, position: Int) {
         val stop = stops[position]
         holder.tvStopName.text = stop.name
-        holder.tvDistance.text = stop.distance
-        holder.tvLocation.text = stop.location
-
-        holder.arrivalsContainer.removeAllViews()
-        for (arrival in stop.arrivals) {
-            val arrivalView = LayoutInflater.from(holder.itemView.context)
-                .inflate(R.layout.item_bus_arrival, holder.arrivalsContainer, false)
-
-            val tvRoute = arrivalView.findViewById<TextView>(R.id.tvRoute)
-            val tvTime = arrivalView.findViewById<TextView>(R.id.tvTime)
-            val tvStatus = arrivalView.findViewById<TextView>(R.id.tvStatus)
-
-            tvRoute.text = arrival.route
-            tvTime.text = arrival.time
-            tvStatus.text = arrival.status
-
-            if (arrival.status == "Retrasado") {
-                tvStatus.setTextColor(Color.RED)
-            } else {
-                tvStatus.setTextColor(Color.parseColor("#4CAF50"))
+        holder.tvStopId.text = stop.id
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, BusArrivalsActivity::class.java).apply {
+                putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
             }
-
-            holder.arrivalsContainer.addView(arrivalView)
+            context.startActivity(intent)
         }
     }
 
     override fun getItemCount() = stops.size
+
+    fun updateStops(newStops: List<NearbyBusStop>) {
+        stops = newStops
+        notifyDataSetChanged()
+    }
 }

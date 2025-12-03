@@ -8,32 +8,22 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- Header -->
-    <LinearLayout
-        android:id="@+id/header"
+    <!-- Header Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ina_red"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:layout_alignParentTop="true">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_logo"
-            app:tint="@color/white"
-            android:contentDescription="Logo" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="INA SAFE"
+            app:titleTextColor="@color/white"
+            android:background="@color/ina_red" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="INA SAFE"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Bottom Navigation Bar (Included) -->
     <include
@@ -48,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation"
-        android:layout_below="@id/header">
+        android:layout_below="@id/appBarLayout">
 
         <LinearLayout
             android:layout_width="match_parent"

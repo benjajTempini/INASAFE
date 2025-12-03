@@ -19,6 +19,24 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        // Comprobar si el usuario ya ha iniciado sesión
+        if (auth.currentUser != null) {
+            val user = auth.currentUser
+            val db = FirebaseDatabase.getInstance().getReference("Users").child(user!!.uid)
+            db.get().addOnSuccessListener { dataSnapshot ->
+                val userRole = dataSnapshot.child("role").getValue(String::class.java)
+                if (userRole == "ADMIN") {
+                    startActivity(Intent(this, AdminActivity::class.java))
+                } else {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                finish()
+            }.addOnFailureListener{
+                Toast.makeText(baseContext, "Error al obtener datos de usuario.", Toast.LENGTH_SHORT).show()
+            }
+            return // Evita que se ejecute el resto del código de onCreate
+        }
+
         val etEmail = findViewById<TextInputEditText>(R.id.etEmail)
         val etPassword = findViewById<TextInputEditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)

@@ -2,38 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingVertical="6dp"
-    android:gravity="center_vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/tvRoute"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text="107"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:background="@drawable/bg_route_badge"
-        android:gravity="center"
-        android:padding="4dp"/>
-
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Llegando"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginStart="12dp"/>
-
-    <TextView
-        android:id="@+id/tvStatus"
+        android:id="@+id/tvServiceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="A tiempo"
-        android:textSize="12sp"
-        android:textColor="#4CAF50"/>
+        android:text="C05"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Metro Francisco Bilbao" />
+
+    <TextView
+        android:id="@+id/tvArrival1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Llegando" />
+
+    <TextView
+        android:id="@+id/tvArrival2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entre 4 Y 8 min" />
 
 </LinearLayout>

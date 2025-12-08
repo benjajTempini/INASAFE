@@ -22,6 +22,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.longOrNull
+import java.util.Calendar
 
 @Serializable
 data class ChatMessage(
@@ -73,8 +74,18 @@ class ChatActivity : AppCompatActivity() {
     private fun fetchInitialMessages() {
         lifecycleScope.launch {
             try {
+                val today = Calendar.getInstance()
+                today.set(Calendar.HOUR_OF_DAY, 0)
+                today.set(Calendar.MINUTE, 0)
+                today.set(Calendar.SECOND, 0)
+
                 val resultList = supabase.from("messages")
-                    .select { filter { eq("group_name", groupName) } }
+                    .select {
+                        filter {
+                            eq("group_name", groupName)
+                            gte("created_at", today.toInstant().toString())
+                        }
+                    }
                     .decodeList<JsonObject>()
 
                 val messages = resultList.mapNotNull { record ->
@@ -138,9 +149,11 @@ class ChatActivity : AppCompatActivity() {
                         )
 
                         if (newMessage.group_name == this@ChatActivity.groupName) {
-                            adapter.add(newMessage)
-                            if (adapter.count > 0) {
-                                chatListView.setSelection(adapter.count - 1)
+                            runOnUiThread {
+                                adapter.add(newMessage)
+                                if (adapter.count > 0) {
+                                    chatListView.setSelection(adapter.count - 1)
+                                }
                             }
                         }
                     }
@@ -155,8 +168,13 @@ class ChatActivity : AppCompatActivity() {
         val messageText = messageEditText.text.toString().trim()
         if (messageText.isNotEmpty()) {
             val user = auth.currentUser
-            val senderName = user?.displayName?.takeIf { it.isNotBlank() }
-                ?: user?.email ?: "Anónimo"
+            if (user == null) {
+                Toast.makeText(this, "No se pudo identificar al usuario. Intente iniciar sesión de nuevo.", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            // Use displayName if available, otherwise fall back to email
+            val senderName = user.displayName?.takeIf { it.isNotBlank() } ?: user.email ?: "Anónimo"
 
             val newMessage = ChatMessage(
                 message = messageText,

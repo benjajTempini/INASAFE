@@ -1,11 +1,13 @@
 package com.example.inasafe
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,6 +28,7 @@ class BusArrivalsActivity : AppCompatActivity() {
         LocationServices.getFusedLocationProviderClient(this)
     }
 
+    private var stopId: String? = null
     private var stopLat: Double = 0.0
     private var stopLon: Double = 0.0
     private var allServices = listOf<BusService>()
@@ -39,7 +42,7 @@ class BusArrivalsActivity : AppCompatActivity() {
         busStopRepository = BusStopRepository()
         preferencesManager = PreferencesManager(this)
 
-        val stopId = intent.getStringExtra(EXTRA_STOP_ID)
+        stopId = intent.getStringExtra(EXTRA_STOP_ID)
         stopLat = intent.getDoubleExtra(EXTRA_STOP_LAT, 0.0)
         stopLon = intent.getDoubleExtra(EXTRA_STOP_LON, 0.0)
 
@@ -47,6 +50,13 @@ class BusArrivalsActivity : AppCompatActivity() {
         rvBusArrivals.layoutManager = LinearLayoutManager(this)
         busArrivalsAdapter = BusArrivalsAdapter(emptyList())
         rvBusArrivals.adapter = busArrivalsAdapter
+
+        val btnGoToGroup = findViewById<Button>(R.id.btnGoToGroup)
+        btnGoToGroup.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("groupName", stopId)
+            startActivity(intent)
+        }
 
         if (stopId == null) {
             Toast.makeText(this, "Stop ID is missing", Toast.LENGTH_SHORT).show()
@@ -63,9 +73,9 @@ class BusArrivalsActivity : AppCompatActivity() {
                 longitude = userLon
             }
             calculateWalkingTime(userLocation)
-            fetchArrivals(stopId)
+            fetchArrivals(stopId!!)
         } else {
-            loadArrivals(stopId)
+            loadArrivals(stopId!!)
         }
     }
 
@@ -83,8 +93,7 @@ class BusArrivalsActivity : AppCompatActivity() {
         }.addOnFailureListener {
             fetchArrivals(stopId)
         }
-    }
-    
+    }    
     private fun calculateWalkingTime(userLocation: Location) {
         val stopLocation = Location("").apply {
             latitude = stopLat

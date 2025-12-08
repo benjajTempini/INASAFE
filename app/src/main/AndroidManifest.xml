@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.INASAFE"
         tools:targetApi="31">
-        
+
         <!-- Splash Activity como launcher -->
         <activity
             android:name=".SplashActivity"
@@ -82,6 +82,16 @@
             android:name=".AdminActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".GroupsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            android:parentActivityName=".GroupsActivity" />
 
     </application>
 

@@ -63,11 +63,9 @@ class MainActivity : AppCompatActivity() {
         btnNavBus.setOnClickListener {
             startActivity(Intent(this, BusStopsActivity::class.java))
         }
-        
+
         btnNavGroups.setOnClickListener {
-            // Por ahora solo mostrará un Toast, luego se implementará GroupsActivity
-            Toast.makeText(this, "Próximamente: Grupos de estudiantes", Toast.LENGTH_SHORT).show()
-            // startActivity(Intent(this, GroupsActivity::class.java))
+            startActivity(Intent(this, GroupsActivity::class.java))
         }
     }
 

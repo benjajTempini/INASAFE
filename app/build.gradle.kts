@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -72,6 +73,9 @@ dependencies {
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck-debug")
 
+    // Kotlinx Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -82,6 +86,12 @@ dependencies {
     // OSMDroid
     implementation("org.osmdroid:osmdroid-android:6.1.18")
     implementation("androidx.preference:preference-ktx:1.2.1")
+
+    // Supabase (with explicit versions and OkHttp engine)
+    implementation("io.github.jan-tennert.supabase:supabase-kt:2.5.3")
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:2.5.3")
+    implementation("io.github.jan-tennert.supabase:realtime-kt:2.5.3")
+    implementation("io.ktor:ktor-client-okhttp:2.3.9")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

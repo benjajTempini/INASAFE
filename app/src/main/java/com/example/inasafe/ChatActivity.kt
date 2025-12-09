@@ -41,6 +41,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var groupName: String
     private lateinit var auth: FirebaseAuth
     private lateinit var adapter: ChatAdapter
+    private lateinit var currentSenderName: String
     private val TAG = "ChatActivity"
     private val supabase = InaSafeApplication.supabaseClient
 
@@ -55,12 +56,14 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.title = groupName
 
         auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        currentSenderName = user?.displayName?.takeIf { it.isNotBlank() } ?: user?.email ?: "Anónimo"
 
         chatListView = findViewById(R.id.chatListView)
         messageEditText = findViewById(R.id.messageEditText)
         sendButton = findViewById(R.id.sendButton)
 
-        adapter = ChatAdapter(this, mutableListOf())
+        adapter = ChatAdapter(this, mutableListOf(), currentSenderName)
         chatListView.adapter = adapter
 
         fetchInitialMessages()
@@ -173,12 +176,13 @@ class ChatActivity : AppCompatActivity() {
                 return
             }
 
-            // Use displayName if available, otherwise fall back to email
-            val senderName = user.displayName?.takeIf { it.isNotBlank() } ?: user.email ?: "Anónimo"
-
+            // Ensure we use the same name logic as in onCreate (or update currentSenderName if needed, but it should be static for the session)
+            // Ideally we use currentSenderName derived in onCreate, but if user profile updated, maybe fetch again.
+            // For now, sticking to the logic in onCreate.
+            
             val newMessage = ChatMessage(
                 message = messageText,
-                sender = senderName,
+                sender = currentSenderName,
                 group_name = groupName
             )
 

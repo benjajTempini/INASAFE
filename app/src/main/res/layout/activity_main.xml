@@ -48,31 +48,49 @@
             android:padding="24dp">
 
             <ImageView
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="40dp"
-                android:src="@drawable/ic_logo" />
+                android:src="@drawable/ic_shield" />
 
-            <Button
-                android:id="@+id/btnPanic"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="24dp"
-                android:backgroundTint="@color/ina_red"
-                android:text="BOTÓN DE PÁNICO"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:cornerRadius="20dp"
-                app:elevation="8dp" />
+            <!-- Panic Button Container for Animation -->
+            <FrameLayout
+                android:layout_width="226dp"
+                android:layout_height="212dp"
+                android:layout_marginBottom="24dp">
+
+                <!-- Pulse Effect View -->
+                <View
+                    android:id="@+id/pulseView"
+                    android:layout_width="172dp"
+                    android:layout_height="178dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.3"
+                    android:background="@drawable/bg_circle_button"
+                    android:scaleX="1.0"
+                    android:scaleY="1.0" />
+
+                <Button
+                    android:id="@+id/btnPanic"
+                    android:layout_width="138dp"
+                    android:layout_height="141dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_circle_button"
+                    android:elevation="8dp"
+                    android:text="SOS"
+                    android:textColor="@color/white"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </FrameLayout>
 
             <Button
                 android:id="@+id/btnReport"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/ina_red_light"
+                android:backgroundTint="@color/ina_red_dark"
                 android:text="REPORTAR INCIDENTE"
                 android:textColor="@color/white"
                 android:textSize="18sp"

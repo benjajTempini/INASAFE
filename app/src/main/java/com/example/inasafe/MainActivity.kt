@@ -1,11 +1,16 @@
 package com.example.inasafe
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -33,9 +38,21 @@ class MainActivity : AppCompatActivity() {
         val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBar)
         setSupportActionBar(topAppBar)
 
+        // Animate Toolbar on start (Slide Down)
+        topAppBar.translationY = -200f // Start off-screen (adjust value if needed)
+        topAppBar.animate()
+            .translationY(0f)
+            .setDuration(800)
+            .setInterpolator(DecelerateInterpolator()) // Smooth deceleration
+            .start()
+
         // Main buttons
         val btnPanic = findViewById<Button>(R.id.btnPanic)
         val btnReport = findViewById<Button>(R.id.btnReport)
+        
+        // Pulse Effect View for Panic Button
+        val pulseView = findViewById<View>(R.id.pulseView)
+        startBreathingAnimation(pulseView)
 
         // Bottom navigation items
         val btnNavMap = findViewById<LinearLayout>(R.id.btnNavMap)
@@ -67,6 +84,20 @@ class MainActivity : AppCompatActivity() {
         btnNavGroups.setOnClickListener {
             startActivity(Intent(this, GroupsActivity::class.java))
         }
+    }
+
+    private fun startBreathingAnimation(view: View) {
+        val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+            view,
+            PropertyValuesHolder.ofFloat("scaleX", 1.2f),
+            PropertyValuesHolder.ofFloat("scaleY", 1.2f),
+            PropertyValuesHolder.ofFloat("alpha", 0.1f)
+        )
+        scaleDown.duration = 1500
+        scaleDown.repeatCount = ObjectAnimator.INFINITE
+        scaleDown.repeatMode = ObjectAnimator.REVERSE
+        scaleDown.interpolator = AccelerateDecelerateInterpolator()
+        scaleDown.start()
     }
 
     private fun sendPanicAlert() {

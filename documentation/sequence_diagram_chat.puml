@@ -1,0 +1,46 @@
+@startuml
+' Diagrama de Secuencia para Enviar y Recibir Mensajes en INASAFE
+
+' Estilo
+autonumber
+actor "Usuario" as User
+participant "ChatActivity" as UI
+participant "FirebaseAuth" as Auth
+participant "SupabaseClient" as Supabase
+participant "RealtimeChannel" as Realtime
+
+' --- Flujo de Envío de Mensaje ---
+
+User -> UI : Escribe y presiona 'Enviar'
+activate UI
+
+UI -> Auth : getCurrentUser()
+activate Auth
+Auth --> UI : Devuelve usuario actual (email, displayName)
+deactivate Auth
+
+UI -> Supabase : from("messages").insert(newMessage)
+activate Supabase
+
+Supabase -> Supabase : Inserta el nuevo mensaje en la tabla 'messages'
+Supabase --> UI : Confirmación de inserción
+deactivate Supabase
+
+UI -> UI : Limpia el campo de texto
+deactivate UI
+
+' --- Flujo de Recepción de Mensaje en Tiempo Real ---
+
+' (Esto ocurre en paralelo en los dispositivos de otros usuarios)
+
+Realtime -> Realtime : Detecta inserción en la tabla 'messages'
+
+Realtime -> UI : Emite evento 'PostgresAction.Insert'
+activate UI
+
+UI -> UI : Recibe el nuevo mensaje y lo añade al adapter
+UI -> UI : Actualiza la ListView (runOnUiThread)
+UI -> User : Muestra el nuevo mensaje en la pantalla
+deactivate UI
+
+@enduml

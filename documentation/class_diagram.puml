@@ -1,0 +1,83 @@
+@startuml
+' Diagrama de Clases para INASAFE
+
+' Estilo
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor PaleTurquoise
+    ArrowColor SeaGreen
+    BorderColor SeaGreen
+}
+
+' Clases Principales (Actividades)
+class LoginActivity
+class RegisterActivity
+class MainActivity
+class MapActivity
+class BusStopsActivity
+class BusArrivalsActivity
+class GroupsActivity
+class ChatActivity
+
+' Clases de UI (Adaptadores)
+class BusStopsAdapter
+class BusArrivalsAdapter
+class GroupsAdapter
+class ChatAdapter
+
+' Lógica de Negocio y Datos
+class BusStopRepository
+class PreferencesManager
+class InaSafeApplication
+
+' Modelos de Datos
+class NearbyBusStop
+class ArrivalsResponse
+class ChatMessage
+class Alert
+
+' Componentes Externos
+class FirebaseAuth
+class FirebaseDatabase
+class FusedLocationProviderClient
+class SupabaseClient
+class BusStopApiService
+
+' --- Relaciones ---
+
+' Relaciones de Herencia/Implementación (no se muestran para simplificar, se asume herencia de AppCompatActivity)
+
+' Relaciones de Composición/Agregación
+InaSafeApplication ..> SupabaseClient : creates
+MainActivity ..> FusedLocationProviderClient : uses
+MainActivity ..> FirebaseDatabase : uses
+MapActivity ..> BusStopRepository : uses
+MapActivity ..> FusedLocationProviderClient : uses
+MapActivity ..> FirebaseDatabase : uses
+BusStopsActivity ..> BusStopRepository : uses
+BusStopsActivity ..> FusedLocationProviderClient : uses
+BusArrivalsActivity ..> BusStopRepository : uses
+BusArrivalsActivity ..> PreferencesManager : uses
+GroupsActivity ..> BusStopRepository : uses
+ChatActivity ..> SupabaseClient : uses
+ChatActivity ..> FirebaseAuth : uses
+
+' Relaciones de Asociación
+RegisterActivity --> FirebaseAuth : creates user
+LoginActivity --> FirebaseAuth : authenticates
+
+BusStopsActivity ..> BusStopsAdapter : uses
+BusArrivalsActivity ..> BusArrivalsAdapter : uses
+GroupsActivity ..> GroupsAdapter : uses
+ChatActivity ..> ChatAdapter : uses
+
+BusStopsAdapter ..> NearbyBusStop : displays
+BusArrivalsAdapter ..> ArrivalsResponse : displays
+GroupsAdapter ..> NearbyBusStop : displays
+ChatAdapter ..> ChatMessage : displays
+
+BusStopRepository ..> BusStopApiService : calls
+BusStopRepository ..> NearbyBusStop : returns
+BusStopRepository ..> ArrivalsResponse : returns
+
+@enduml

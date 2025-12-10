@@ -38,10 +38,10 @@ class InaSafeApplication : Application() {
         // Initialize OSMDroid configuration
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
 
-        // Initialize Supabase
+        // Initialize Supabase with credentials from BuildConfig
         supabaseClient = createSupabaseClient(
-            supabaseUrl = "https://csljxjrfuyiaccolekqx.supabase.co",
-            supabaseKey = "sb_publishable_48VxcrbggBRSr1sLN0ZDnw_0CG1n4U2"
+            supabaseUrl = BuildConfig.SUPABASE_URL,
+            supabaseKey = BuildConfig.SUPABASE_KEY
         ) {
             install(Postgrest)
             install(Realtime)

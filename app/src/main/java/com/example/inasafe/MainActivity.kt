@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -39,16 +40,25 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(topAppBar)
 
         // Animate Toolbar on start (Slide Down)
-        topAppBar.translationY = -200f // Start off-screen (adjust value if needed)
+        topAppBar.translationY = -200f // Start off-screen
         topAppBar.animate()
             .translationY(0f)
             .setDuration(800)
-            .setInterpolator(DecelerateInterpolator()) // Smooth deceleration
+            .setInterpolator(DecelerateInterpolator())
             .start()
 
         // Main buttons
         val btnPanic = findViewById<Button>(R.id.btnPanic)
         val btnReport = findViewById<Button>(R.id.btnReport)
+        
+        // Emergency Call Buttons
+        val btnCallPolice = findViewById<LinearLayout>(R.id.btnCallPolice)
+        val btnCallAmbulance = findViewById<LinearLayout>(R.id.btnCallAmbulance)
+        val btnCallFire = findViewById<LinearLayout>(R.id.btnCallFire)
+
+        btnCallPolice.setOnClickListener { makePhoneCall("133") }
+        btnCallAmbulance.setOnClickListener { makePhoneCall("131") }
+        btnCallFire.setOnClickListener { makePhoneCall("132") }
         
         // Pulse Effect View for Panic Button
         val pulseView = findViewById<View>(R.id.pulseView)
@@ -58,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         val btnNavMap = findViewById<LinearLayout>(R.id.btnNavMap)
         val btnNavList = findViewById<LinearLayout>(R.id.btnNavList)
         val btnNavBus = findViewById<LinearLayout>(R.id.btnNavBus)
-        // Reemplazamos btnNavProfile por btnNavGroups
         val btnNavGroups = findViewById<LinearLayout>(R.id.btnNavGroups)
 
         btnPanic.setOnClickListener {
@@ -84,6 +93,13 @@ class MainActivity : AppCompatActivity() {
         btnNavGroups.setOnClickListener {
             startActivity(Intent(this, GroupsActivity::class.java))
         }
+    }
+    
+    private fun makePhoneCall(number: String) {
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$number")
+        }
+        startActivity(intent)
     }
 
     private fun startBreathingAnimation(view: View) {

@@ -55,47 +55,138 @@
                 android:src="@drawable/ic_shield" />
 
             <!-- Panic Button Container for Animation -->
+            <!-- Use clipChildren="false" to allow pulse to go outside bounds -->
             <FrameLayout
-                android:layout_width="226dp"
-                android:layout_height="212dp"
-                android:layout_marginBottom="24dp">
-
-                <!-- Pulse Effect View -->
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_marginBottom="24dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+                
+                <!-- Pulse Effect View (Smaller than container but scales up) -->
                 <View
                     android:id="@+id/pulseView"
-                    android:layout_width="172dp"
-                    android:layout_height="178dp"
-                    android:layout_gravity="center"
-                    android:alpha="0.3"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:background="@drawable/bg_circle_button"
-                    android:scaleX="1.0"
-                    android:scaleY="1.0" />
+                    android:alpha="0.3"
+                    android:layout_gravity="center"/>
 
                 <Button
                     android:id="@+id/btnPanic"
-                    android:layout_width="138dp"
-                    android:layout_height="141dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bg_circle_button"
-                    android:elevation="8dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/bg_panic_ripple"
                     android:text="SOS"
                     android:textColor="@color/white"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    app:backgroundTint="@null" />
+                    android:layout_gravity="center"
+                    app:backgroundTint="@null"
+                    android:elevation="8dp"/>
             </FrameLayout>
 
             <Button
                 android:id="@+id/btnReport"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 android:backgroundTint="@color/ina_red_dark"
                 android:text="REPORTAR INCIDENTE"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:cornerRadius="16dp" />
+
+            <!-- Quick Emergency Calls -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Llamadas de Emergencia"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:layout_marginBottom="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/btnCallPolice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="8dp">
+                    
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_carabineros"
+                        android:padding="0dp"
+                        android:background="@drawable/bg_circle_button"
+                        android:backgroundTint="#006400"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="133"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnCallAmbulance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_hospital"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_circle_button"
+                        android:backgroundTint="#F44336"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="131"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:id="@+id/btnCallFire"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_warning"
+                        android:padding="8dp"
+                        app:tint="@color/white"
+                        android:background="@drawable/bg_circle_button"
+                        android:backgroundTint="#FF9800"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="132"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

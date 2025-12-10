@@ -11,6 +11,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/btnFilters"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnMetroStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_subway"
+            app:backgroundTint="@color/white"
+            app:tint="@color/ina_red"
+            android:contentDescription="Estado del Metro" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnShareLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_share"
+            app:backgroundTint="@color/white"
+            app:tint="@color/text_primary"
+            android:contentDescription="Compartir Ubicación" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnFilters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/btnCenterMap"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_layers"
+        app:backgroundTint="@color/white"
+        app:tint="@color/text_primary"
+        android:contentDescription="Filtros" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnCenterMap"
         android:layout_width="wrap_content"
@@ -50,25 +95,46 @@
                 app:tint="@color/text_secondary"
                 android:contentDescription="Cerrar"/>
 
-            <TextView
-                android:id="@+id/tvInfoTitle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Título"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:layout_toStartOf="@id/btnCloseInfo"
-                android:layout_marginBottom="4dp"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvInfoDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción..."
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:layout_below="@id/tvInfoTitle"/>
+                <TextView
+                    android:id="@+id/tvInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Título"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvInfoDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción..."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="12dp"/>
+                    
+                <!-- Botón de Navegación -->
+                <Button
+                    android:id="@+id/btnNavigate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="CÓMO LLEGAR"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_action_button"
+                    android:textColor="@color/white"
+                    android:paddingHorizontal="24dp"
+                    app:backgroundTint="@null"/>
+
+            </LinearLayout>
                 
         </RelativeLayout>
 

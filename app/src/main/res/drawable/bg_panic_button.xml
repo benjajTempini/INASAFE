@@ -4,5 +4,5 @@
     <solid android:color="#F44336"/> <!-- Red color similar to image -->
     <stroke
         android:width="4dp"
-        android:color="#FFCDD2"/> <!-- Lighter red/white border for the effect -->
+        android:color="#C84657"/> <!-- Lighter red/white border for the effect -->
 </shape>

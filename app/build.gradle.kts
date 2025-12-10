@@ -1,4 +1,5 @@
 import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
@@ -7,12 +8,18 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 }
 
-// Load properties from local.properties
+// --- Carga Segura de Propiedades ---
 val localProperties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
-    localProperties.load(localPropertiesFile.inputStream())
+    localProperties.load(FileInputStream(localPropertiesFile))
+} else {
+    throw GradleException("local.properties not found. Please create one with Supabase credentials.")
 }
+
+val supabaseUrl = localProperties.getProperty("supabase.url") ?: throw GradleException("supabase.url not found in local.properties")
+val supabaseKey = localProperties.getProperty("supabase.key") ?: throw GradleException("supabase.key not found in local.properties")
+// ---
 
 android {
     namespace = "com.example.inasafe"
@@ -40,8 +47,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Make Supabase credentials available in BuildConfig
-        buildConfigField("String", "SUPABASE_URL", "\"${localProperties.getProperty("supabase.url")}\"")
-        buildConfigField("String", "SUPABASE_KEY", "\"${localProperties.getProperty("supabase.key")}\"")
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
     }
 
     buildTypes {

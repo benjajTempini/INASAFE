@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".GroupsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -16,7 +17,7 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Grupos de Chat"
+            app:title="Grupos Disponibles"
             app:titleTextColor="@color/white"
             android:background="@color/ina_red" />
 
@@ -26,6 +27,10 @@
         android:id="@+id/groupsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/appBarLayout" />
+        android:layout_below="@id/appBarLayout"
+        android:paddingVertical="8dp"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="4dp"/>
 
 </RelativeLayout>

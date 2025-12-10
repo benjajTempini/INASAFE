@@ -4,8 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -27,17 +29,24 @@ class ReportActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
 
+        val spinnerType = findViewById<Spinner>(R.id.spinnerType)
         val etDescription = findViewById<EditText>(R.id.etDescription)
         val etDetails = findViewById<EditText>(R.id.etDetails)
         val btnSendReport = findViewById<Button>(R.id.btnSendReport)
         val btnViewAll = findViewById<Button>(R.id.btnViewAll)
 
+        // Configurar Spinner
+        val incidentTypes = arrayOf("Robo", "Acoso", "Accidente", "Infraestructura", "Otro")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, incidentTypes)
+        spinnerType.adapter = adapter
+
         btnSendReport.setOnClickListener {
+            val type = spinnerType.selectedItem.toString()
             val description = etDescription.text.toString()
             val details = etDetails.text.toString()
 
             if (description.isNotEmpty()) {
-                sendReport(description, details, userId)
+                sendReport(type, description, details, userId)
             } else {
                 Toast.makeText(this, "Por favor ingrese una descripción", Toast.LENGTH_SHORT).show()
             }
@@ -48,7 +57,7 @@ class ReportActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendReport(description: String, details: String, userId: String) {
+    private fun sendReport(type: String, description: String, details: String, userId: String) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Se necesita permiso de ubicación para enviar un reporte.", Toast.LENGTH_LONG).show()
@@ -61,11 +70,11 @@ class ReportActivity : AppCompatActivity() {
                 val alertId = database.push().key!!
 
                 val alert = Alert(
-                    title = "Reporte de Usuario",
+                    title = "Reporte: $type", // Usar el tipo como parte del título
                     description = "$description. $details",
                     time = System.currentTimeMillis().toString(),
                     status = "Activa",
-                    type = "Reporte",
+                    type = type, // Guardar el tipo específico
                     latitude = location.latitude,
                     longitude = location.longitude,
                     userId = userId

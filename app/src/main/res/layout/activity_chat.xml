@@ -49,6 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Mensaje"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_secondary"
             android:background="@drawable/bg_chat_input"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

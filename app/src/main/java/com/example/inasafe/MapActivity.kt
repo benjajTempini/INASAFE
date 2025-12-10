@@ -4,13 +4,17 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.inasafe.data.network.NearbyBusStop
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
 import kotlinx.coroutines.launch
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -27,6 +31,10 @@ class MapActivity : AppCompatActivity() {
     private lateinit var busStopRepository: BusStopRepository
     private lateinit var alertsRef: DatabaseReference
     private val alertMarkers = mutableListOf<Marker>()
+    private lateinit var infoCard: CardView
+    private lateinit var tvInfoTitle: TextView
+    private lateinit var tvInfoDesc: TextView
+    private lateinit var btnCloseInfo: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +42,25 @@ class MapActivity : AppCompatActivity() {
 
         busStopRepository = BusStopRepository()
         alertsRef = FirebaseDatabase.getInstance().getReference("Alerts")
+
+        // Initialize UI elements by ID
+        infoCard = findViewById<CardView>(R.id.infoCard)
+        tvInfoTitle = findViewById(R.id.tvInfoTitle)
+        tvInfoDesc = findViewById(R.id.tvInfoDesc)
+        btnCloseInfo = findViewById(R.id.btnCloseInfo)
+        
+        btnCloseInfo.setOnClickListener {
+            infoCard.visibility = View.GONE
+        }
+
+        val btnCenterMap = findViewById<FloatingActionButton>(R.id.btnCenterMap)
+        btnCenterMap.setOnClickListener {
+            val myLocation = locationOverlay.myLocation
+            if (myLocation != null) {
+                map.controller.animateTo(myLocation)
+                map.controller.setZoom(18.0)
+            }
+        }
 
         // Initialize the map
         map = findViewById(R.id.map)
@@ -106,24 +133,38 @@ class MapActivity : AppCompatActivity() {
             stopMarker.icon = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop)
             
             stopMarker.setOnMarkerClickListener { _, _ ->
-                val myLocation = locationOverlay.myLocation
-                if (myLocation != null) {
-                    val intent = Intent(this, BusArrivalsActivity::class.java).apply {
-                        putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
-                        putExtra(BusArrivalsActivity.EXTRA_STOP_LAT, stop.lat)
-                        putExtra(BusArrivalsActivity.EXTRA_STOP_LON, stop.lon)
-                        putExtra(BusArrivalsActivity.EXTRA_USER_LAT, myLocation.latitude)
-                        putExtra(BusArrivalsActivity.EXTRA_USER_LON, myLocation.longitude)
+                showInfoCard(stop.name, "Paradero: ${stop.id}\nToca para ver llegadas", true) {
+                    val myLocation = locationOverlay.myLocation
+                    if (myLocation != null) {
+                        val intent = Intent(this, BusArrivalsActivity::class.java).apply {
+                            putExtra(BusArrivalsActivity.EXTRA_STOP_ID, stop.id)
+                            putExtra(BusArrivalsActivity.EXTRA_STOP_LAT, stop.lat)
+                            putExtra(BusArrivalsActivity.EXTRA_STOP_LON, stop.lon)
+                            putExtra(BusArrivalsActivity.EXTRA_USER_LAT, myLocation.latitude)
+                            putExtra(BusArrivalsActivity.EXTRA_USER_LON, myLocation.longitude)
+                        }
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, "No se pudo obtener tu ubicación actual.", Toast.LENGTH_SHORT).show()
                     }
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "No se pudo obtener tu ubicación actual.", Toast.LENGTH_SHORT).show()
                 }
                 true
             }
             map.overlays.add(stopMarker)
         }
         map.invalidate() // Refresh the map
+    }
+    
+    private fun showInfoCard(title: String, desc: String, isClickable: Boolean = false, onClick: (() -> Unit)? = null) {
+        tvInfoTitle.text = title
+        tvInfoDesc.text = desc
+        infoCard.visibility = View.VISIBLE
+        
+        if (isClickable && onClick != null) {
+            infoCard.setOnClickListener { onClick() }
+        } else {
+            infoCard.setOnClickListener(null)
+        }
     }
 
     private fun listenForAlerts() {
@@ -140,9 +181,23 @@ class MapActivity : AppCompatActivity() {
                         val alertMarker = Marker(map)
                         alertMarker.position = GeoPoint(alert.latitude, alert.longitude)
                         alertMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                        alertMarker.title = alert.title
-                        alertMarker.subDescription = alert.description
+                        
+                        // Handle potential nullable title/description safely
+                        val title = alert.title ?: "Alerta"
+                        val description = alert.description ?: "Sin descripción"
+                        val type = alert.type ?: "General"
+
+                        alertMarker.title = title
+                        alertMarker.subDescription = description
+                        
+                        // Set icon based on type if you want distinct icons, for now generic warning
                         alertMarker.icon = ContextCompat.getDrawable(this@MapActivity, R.drawable.ic_warning)
+                        
+                        alertMarker.setOnMarkerClickListener { _, _ ->
+                            showInfoCard(title, "$description\n$type", false, null)
+                            true
+                        }
+                        
                         alertMarkers.add(alertMarker)
                         map.overlays.add(alertMarker)
                     }
